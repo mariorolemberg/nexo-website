@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nexo Business Solutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #0a1628;
+      --navy-mid: #0f2347;
+      --navy-light: #1a3a6e;
+      --blue-accent: #2563eb;
+      --blue-glow: #3b82f6;
+      --white: #ffffff;
+      --off-white: #f0f4ff;
+      --text-muted: #94a3b8;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: rgba(10,22,40,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo-icon svg { width: 42px; height: 42px; }
+    .logo-wordmark { display: flex; flex-direction: column; line-height: 1; }
+    .logo-name { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--white); letter-spacing: -0.03em; text-transform: uppercase; }
+    .logo-name span { background: linear-gradient(90deg, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .logo-tagline { font-family: 'Space Grotesk', sans-serif; font-size: 0.62rem; font-weight: 500; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 2px; }
+
+    nav ul { list-style: none; display: flex; gap: 40px; }
+    nav ul a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.03em; transition: color 0.2s; }
+    nav ul a:hover { color: var(--white); }
+
+    .nav-cta { background: var(--blue-accent); color: white !important; padding: 10px 24px; border-radius: 8px; font-weight: 600 !important; transition: all 0.2s !important; }
+    .nav-cta:hover { background: var(--blue-glow) !important; color: white !important; transform: translateY(-1px); box-shadow: 0 8px 25px rgba(37,99,235,0.4); }
+
+    #hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; padding: 120px 40px 80px; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37,99,235,0.25) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 80% 80%, rgba(59,130,246,0.1) 0%, transparent 50%); }
+    .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; }
+    .hero-content { position: relative; z-index: 2; max-width: 860px; }
+
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.4); padding: 8px 18px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; color: var(--blue-glow); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 28px; }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--blue-glow); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.5); } }
+
+    h1 { font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 24px; }
+    h1 .highlight { background: linear-gradient(135deg, #60a5fa, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; max-width: 580px; margin: 0 auto 44px; font-weight: 400; }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--blue-accent); color: white; padding: 16px 36px; border-radius: 10px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.2s; box-shadow: 0 8px 30px rgba(37,99,235,0.4); }
+    .btn-primary:hover { background: var(--blue-glow); transform: translateY(-2px); box-shadow: 0 16px 40px rgba(37,99,235,0.5); }
+    .btn-secondary { background: transparent; color: white; padding: 16px 36px; border-radius: 10px; font-weight: 600; font-size: 1rem; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); transition: all 0.2s; }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+
+    .hero-stats { display: flex; justify-content: center; gap: 60px; margin-top: 80px; padding-top: 60px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 2.2rem; font-weight: 900; color: var(--white); letter-spacing: -0.02em; }
+    .stat-num span { color: var(--blue-glow); }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+    section { padding: 110px 40px; }
+    .section-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--blue-glow); margin-bottom: 14px; }
+    .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 18px; }
+    .section-sub { font-size: 1.05rem; color: var(--text-muted); line-height: 1.7; max-width: 540px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    #services { background: var(--navy-mid); }
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 60px; flex-wrap: wrap; }
+
+    .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: auto; gap: 20px; }
+    .bento-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 24px; padding: 36px; position: relative; overflow: hidden; transition: all 0.35s ease; cursor: default; }
+    .bento-card::after { content: ''; position: absolute; inset: 0; border-radius: 24px; background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(37,99,235,0.12) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; }
+    .bento-card:hover { border-color: rgba(37,99,235,0.45); transform: translateY(-3px); }
+    .bento-card:hover::after { opacity: 1; }
+    .bento-1 { grid-column: span 7; }
+    .bento-2 { grid-column: span 5; }
+    .bento-3 { grid-column: span 4; }
+    .bento-4 { grid-column: span 8; }
+    .bento-5 { grid-column: span 5; }
+    .bento-6 { grid-column: span 7; }
+    .bento-icon { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, rgba(37,99,235,0.25), rgba(59,130,246,0.1)); border: 1px solid rgba(37,99,235,0.35); display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
+    .bento-icon svg { width: 22px; height: 22px; stroke: #60a5fa; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .bento-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.01em; }
+    .bento-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; max-width: 420px; }
+    .bento-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue-glow); background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3); padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+    .bento-card .bento-stat { font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; color: var(--white); margin-top: 20px; }
+    .bento-card .bento-stat span { color: var(--blue-glow); }
+    .bento-deco { position: absolute; right: -20px; bottom: -20px; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, rgba(37,99,235,0.15), transparent 70%); pointer-events: none; }
+    @media (max-width: 768px) { .bento-1, .bento-2, .bento-3, .bento-4, .bento-5, .bento-6 { grid-column: span 12; } }
+
+    #about { background: var(--navy); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-visual { position: relative; height: 480px; }
+    .about-dashboard { width: 100%; height: 100%; border-radius: 30px; background: linear-gradient(135deg, var(--navy-mid), #0a1628); border: 1px solid var(--border); position: relative; overflow: hidden; padding: 30px; }
+    .about-dashboard::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 40% at 70% 20%, rgba(37,99,235,0.15) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(59,130,246,0.08) 0%, transparent 50%); }
+    .dash-card { position: absolute; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 18px 22px; backdrop-filter: blur(10px); }
+    .dash-card:hover { border-color: rgba(37,99,235,0.4); }
+    .dash-card-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+    .dash-card-value { font-size: 1.6rem; font-weight: 800; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
+    .dash-card-value span { color: var(--blue-glow); }
+    .dash-card-sub { font-size: 0.75rem; color: #22c55e; margin-top: 4px; font-weight: 600; }
+    .dash-card-1 { top: 30px; left: 24px; width: 170px; animation: dashFloat1 5s ease-in-out infinite; }
+    .dash-card-2 { top: 30px; right: 24px; width: 160px; animation: dashFloat2 6s ease-in-out infinite; }
+    .dash-card-3 { top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; animation: dashFloat3 7s ease-in-out infinite; }
+    .dash-card-4 { bottom: 30px; left: 24px; width: 155px; animation: dashFloat1 5.5s ease-in-out infinite reverse; }
+    .dash-card-5 { bottom: 30px; right: 24px; width: 160px; animation: dashFloat2 6.5s ease-in-out infinite reverse; }
+    @keyframes dashFloat1 { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+    @keyframes dashFloat2 { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-14px); } }
+    @keyframes dashFloat3 { 0%, 100% { transform: translate(-50%, -50%) translateY(0px); } 50% { transform: translate(-50%, -50%) translateY(-8px); } }
+    .mini-chart { display: flex; align-items: flex-end; gap: 4px; height: 32px; margin-top: 10px; }
+    .mini-bar { flex: 1; background: var(--blue-accent); border-radius: 3px 3px 0 0; opacity: 0.7; animation: barGrow 1.5s ease-out forwards; transform-origin: bottom; }
+    @keyframes barGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+    .live-dot { display: inline-block; width: 7px; height: 7px; background: #22c55e; border-radius: 50%; margin-right: 5px; animation: livePulse 1.5s infinite; vertical-align: middle; }
+    @keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(34,197,94,0.4); } 50% { opacity: 0.8; transform: scale(1.2); box-shadow: 0 0 0 6px rgba(34,197,94,0); } }
+    .dash-connections { position: absolute; inset: 0; pointer-events: none; }
+
+    .whatsapp-btn { position: fixed; bottom: 32px; right: 32px; z-index: 999; width: 60px; height: 60px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(37,211,102,0.5); text-decoration: none; transition: all 0.3s ease; animation: waPulse 3s ease-in-out infinite; }
+    .whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(37,211,102,0.7); }
+    .whatsapp-btn svg { width: 32px; height: 32px; fill: white; }
+    .whatsapp-tooltip { position: absolute; right: 72px; background: #1a1a1a; color: white; font-size: 0.8rem; font-weight: 600; padding: 8px 14px; border-radius: 8px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+    .whatsapp-btn:hover .whatsapp-tooltip { opacity: 1; }
+    @keyframes waPulse { 0%, 100% { box-shadow: 0 8px 30px rgba(37,211,102,0.5); } 50% { box-shadow: 0 8px 40px rgba(37,211,102,0.8), 0 0 0 12px rgba(37,211,102,0.1); } }
+
+    .about-text p { font-size: 1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 18px; }
+    .about-list { list-style: none; margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+    .about-list li { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; color: var(--white); }
+    .about-list li::before { content: '✓'; width: 24px; height: 24px; background: rgba(37,99,235,0.2); border: 1px solid rgba(37,99,235,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--blue-glow); flex-shrink: 0; }
+
+    #testimonials { background: var(--navy-mid); }
+    .testimonials-header { text-align: center; margin-bottom: 70px; }
+    .testimonials-header .section-sub { margin: 0 auto; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .testimonial-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 20px; padding: 36px; transition: all 0.3s; }
+    .testimonial-card:hover { border-color: rgba(37,99,235,0.3); background: rgba(37,99,235,0.05); }
+    .stars { display: flex; gap: 4px; margin-bottom: 20px; }
+    .stars span { color: #fbbf24; font-size: 1rem; }
+    .testimonial-card blockquote { font-size: 0.95rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 28px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 14px; }
+    .author-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--blue-accent), var(--navy-light)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+    .author-name { font-weight: 700; font-size: 0.9rem; }
+    .author-role { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+    #pricing { background: var(--navy); }
+    .pricing-header { text-align: center; margin-bottom: 70px; }
+    .pricing-header .section-sub { margin: 0 auto; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: center; }
+    .pricing-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 24px; padding: 44px 40px; transition: all 0.3s; position: relative; }
+    .pricing-card.featured { background: linear-gradient(145deg, rgba(37,99,235,0.2), rgba(37,99,235,0.05)); border-color: rgba(37,99,235,0.6); transform: scale(1.04); }
+    .popular-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--blue-accent); color: white; font-size: 0.75rem; font-weight: 700; padding: 6px 20px; border-radius: 100px; letter-spacing: 0.05em; white-space: nowrap; }
+    .plan-name { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue-glow); margin-bottom: 16px; }
+    .plan-price { font-size: 3rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 6px; }
+    .plan-price sup { font-size: 1.2rem; font-weight: 600; vertical-align: top; margin-top: 12px; display: inline-block; }
+    .plan-price .period { font-size: 1rem; font-weight: 400; color: var(--text-muted); }
+    .plan-desc { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 32px; line-height: 1.6; }
+    .plan-features { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 12px; }
+    .plan-features li { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--text-muted); }
+    .plan-features li::before { content: '✓'; color: var(--blue-glow); font-weight: 700; flex-shrink: 0; }
+    .plan-btn { display: block; text-align: center; padding: 14px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+    .plan-btn.outline { border: 1px solid rgba(255,255,255,0.2); color: white; }
+    .plan-btn.outline:hover { border-color: var(--blue-accent); color: var(--blue-glow); }
+    .plan-btn.solid { background: var(--blue-accent); color: white; box-shadow: 0 8px 25px rgba(37,99,235,0.4); }
+    .plan-btn.solid:hover { background: var(--blue-glow); box-shadow: 0 12px 35px rgba(37,99,235,0.5); transform: translateY(-1px); }
+
+    #contact { background: var(--navy-mid); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
+    .contact-info h2 { margin-bottom: 16px; }
+    .contact-info p { color: var(--text-muted); line-height: 1.7; margin-bottom: 40px; }
+    .contact-details { display: flex; flex-direction: column; gap: 20px; }
+    .contact-item { display: flex; align-items: center; gap: 14px; font-size: 0.95rem; }
+    .contact-item-icon { width: 40px; height: 40px; background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .contact-item-text { color: var(--text-muted); }
+    .contact-item-text strong { color: var(--white); display: block; margin-bottom: 2px; }
+    .contact-form { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 24px; padding: 44px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .form-group label { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; }
+    .form-group input, .form-group select, .form-group textarea { background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; color: var(--white); font-family: 'Inter', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--blue-accent); }
+    .form-group select option { background: var(--navy-mid); }
+    .form-group textarea { resize: none; height: 120px; }
+    .form-submit { width: 100%; background: var(--blue-accent); color: white; border: none; padding: 16px; border-radius: 10px; font-weight: 700; font-size: 1rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 25px rgba(37,99,235,0.4); margin-top: 4px; }
+    .form-submit:hover { background: var(--blue-glow); transform: translateY(-1px); box-shadow: 0 12px 35px rgba(37,99,235,0.5); }
+
+    footer { background: var(--navy); border-top: 1px solid var(--border); padding: 60px 40px 40px; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+    .footer-copy { font-size: 0.85rem; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 32px; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; background: none; border: none; z-index: 200; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s ease; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10,22,40,0.98); backdrop-filter: blur(20px); z-index: 150; flex-direction: column; align-items: center; justify-content: center; gap: 40px; opacity: 0; transition: opacity 0.3s ease; }
+    .mobile-menu.open { display: flex; opacity: 1; }
+    .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.8rem; font-weight: 700; letter-spacing: -0.02em; transition: color 0.2s; }
+    .mobile-menu a:hover { color: var(--blue-glow); }
+    .mobile-menu .mobile-cta { background: var(--blue-accent); padding: 16px 40px; border-radius: 12px; font-size: 1.1rem; box-shadow: 0 8px 30px rgba(37,99,235,0.4); }
+
+    .lang-switcher { display: flex; gap: 2px; align-items: center; margin-left: 8px; }
+    .lang-btn { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-decoration: none; padding: 5px 9px; border-radius: 6px; border: 1px solid transparent; transition: all 0.2s; letter-spacing: 0.06em; }
+    .lang-btn:hover { color: var(--white); border-color: var(--border); }
+    .lang-btn.active { color: var(--white); background: rgba(255,255,255,0.08); border-color: var(--border); }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      nav ul { display: none; }
+      .lang-switcher { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 80px 24px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-visual { height: 300px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+      .pricing-card.featured { transform: none; }
+      .hero-stats { gap: 32px; }
+      .services-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#">
+    <div class="logo-icon">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="navBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#60a5fa"/>
+            <stop offset="100%" style="stop-color:#1d4ed8"/>
+          </linearGradient>
+          <linearGradient id="navSilver" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#f1f5f9"/>
+            <stop offset="100%" style="stop-color:#94a3b8"/>
+          </linearGradient>
+        </defs>
+        <path d="M28 18 L72 18 L50 50Z" fill="rgba(96,165,250,0.15)"/>
+        <path d="M28 82 L72 82 L50 50Z" fill="rgba(96,165,250,0.15)"/>
+        <rect x="20" y="18" width="14" height="64" rx="3" fill="url(#navSilver)"/>
+        <rect x="66" y="18" width="14" height="64" rx="3" fill="url(#navSilver)"/>
+        <line x1="27" y1="22" x2="73" y2="78" stroke="url(#navBlue)" stroke-width="14" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="3.5" fill="#93c5fd" opacity="0.9"/>
+      </svg>
+    </div>
+    <div class="logo-wordmark">
+      <span class="logo-name">NEX<span>O</span></span>
+      <span class="logo-tagline">Business Solutions</span>
+    </div>
+  </a>
+  <ul>
+    <li><a href="#services">Servicios</a></li>
+    <li><a href="#about">Nosotros</a></li>
+    <li><a href="#testimonials">Testimonios</a></li>
+    <li><a href="#pricing">Precios</a></li>
+    <li><a href="#standalone">À La Carte</a></li>
+    <li><a href="#contact" class="nav-cta">Comenzar</a></li>
+  </ul>
+  <div class="lang-switcher">
+    <a href="index.html" class="lang-btn">EN</a>
+    <a href="index-es.html" class="lang-btn active">ES</a>
+    <a href="index-pt.html" class="lang-btn">PT</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" class="mobile-link">Servicios</a>
+  <a href="#about" class="mobile-link">Nosotros</a>
+  <a href="#testimonials" class="mobile-link">Testimonios</a>
+  <a href="#pricing" class="mobile-link">Precios</a>
+  <a href="#contact" class="mobile-cta mobile-link">Comenzar</a>
+</div>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Soluciones Empresariales Completas</div>
+    <h1>Cada Ángulo de Tu<br/><span class="highlight">Negocio, Cubierto.</span></h1>
+    <p class="hero-sub">Desde análisis financiero hasta redes sociales — nosotros manejamos la parte empresarial para que tú te enfoques en lo que mejor sabes hacer.</p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary">Consulta Gratis</a>
+      <a href="#services" class="btn-secondary">Ver Servicios</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">200<span>+</span></div>
+        <div class="stat-label">Negocios Atendidos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">98<span>%</span></div>
+        <div class="stat-label">Retención de Clientes</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5<span>★</span></div>
+        <div class="stat-label">Calificación Promedio</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3<span>x</span></div>
+        <div class="stat-label">Crecimiento Promedio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <div class="services-header">
+      <div>
+        <div class="section-label">Lo Que Hacemos</div>
+        <h2 class="section-title">Todo Lo Que Tu Negocio Necesita</h2>
+      </div>
+      <p class="section-sub">Nos especializamos en ayudar a técnicos y negocios locales a crecer — desde tus finanzas hasta tu marca.</p>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-card bento-1">
+        <div class="bento-tag">Más Solicitado</div>
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>Análisis y Reportes Financieros</h3>
+        <p>Monitoreamos tus ingresos, gastos y flujo de caja en tiempo real — dándote una imagen clara de la salud de tu negocio y exactamente dónde crecer.</p>
+        <div class="bento-stat">+<span>32</span>% crecimiento promedio</div>
+        <div class="bento-deco"></div>
+      </div>
+      <div class="bento-card bento-2">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+        <h3>Diseño y Desarrollo Web</h3>
+        <p>Páginas web modernas, rápidas y optimizadas para móvil, diseñadas para convertir visitantes en clientes. Sin plantillas — cada sitio es creado exclusivamente para ti.</p>
+      </div>
+      <div class="bento-card bento-3">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
+        <h3>Gestión de Redes Sociales</h3>
+        <p>Manejamos tu presencia en redes — manteniéndote activo y visible frente a clientes locales todos los días.</p>
+      </div>
+      <div class="bento-card bento-4">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        <h3>Marketing Digital y SEO</h3>
+        <p>Google Ads, SEO local y campañas dirigidas que traen clientes reales a tu puerta — no solo impresiones en pantalla. Nos enfocamos en resultados medibles: llamadas, clics y trabajos reservados.</p>
+        <div class="bento-stat"><span>3x</span> más clientes potenciales</div>
+        <div class="bento-deco"></div>
+      </div>
+      <div class="bento-card bento-5">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <h3>Gestión de Reputación</h3>
+        <p>Te ayudamos a obtener reseñas, responder comentarios y construir la reputación de cinco estrellas que convierte visitantes en clientes leales.</p>
+      </div>
+      <div class="bento-card bento-6">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Consultoría y Estrategia Empresarial</h3>
+        <p>Asesoramiento en precios, planificación de crecimiento y estrategia real de personas que entienden el negocio de los oficios. Aprendemos tu operación y construimos un plan que realmente funciona.</p>
+        <div class="bento-deco"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-dashboard">
+          <svg class="dash-connections" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <line x1="30" y1="20" x2="50" y2="50" stroke="rgba(96,165,250,0.15)" stroke-width="0.5" stroke-dasharray="3,3"/>
+            <line x1="70" y1="20" x2="50" y2="50" stroke="rgba(96,165,250,0.15)" stroke-width="0.5" stroke-dasharray="3,3"/>
+            <line x1="30" y1="80" x2="50" y2="50" stroke="rgba(96,165,250,0.15)" stroke-width="0.5" stroke-dasharray="3,3"/>
+            <line x1="70" y1="80" x2="50" y2="50" stroke="rgba(96,165,250,0.15)" stroke-width="0.5" stroke-dasharray="3,3"/>
+          </svg>
+          <div class="dash-card dash-card-1">
+            <div class="dash-card-label">Ingresos Mensuales</div>
+            <div class="dash-card-value">$<span class="count" data-target="24">0</span>K</div>
+            <div class="dash-card-sub">↑ 32% este mes</div>
+            <div class="mini-chart">
+              <div class="mini-bar" style="height:40%;animation-delay:0.1s"></div>
+              <div class="mini-bar" style="height:60%;animation-delay:0.2s"></div>
+              <div class="mini-bar" style="height:45%;animation-delay:0.3s"></div>
+              <div class="mini-bar" style="height:80%;animation-delay:0.4s"></div>
+              <div class="mini-bar" style="height:65%;animation-delay:0.5s;background:#60a5fa;opacity:1"></div>
+            </div>
+          </div>
+          <div class="dash-card dash-card-2">
+            <div class="dash-card-label">Calificación Prom.</div>
+            <div class="dash-card-value"><span>5.0</span> ★</div>
+            <div class="dash-card-sub">↑ 48 nuevas reseñas</div>
+          </div>
+          <div class="dash-card dash-card-3">
+            <div class="dash-card-label"><span class="live-dot"></span>Panel en Vivo</div>
+            <div class="dash-card-value"><span class="count" data-target="98">0</span>%</div>
+            <div class="dash-card-label" style="margin-top:4px;margin-bottom:0">Retención de Clientes</div>
+          </div>
+          <div class="dash-card dash-card-4">
+            <div class="dash-card-label">Nuevos Clientes</div>
+            <div class="dash-card-value"><span class="count" data-target="143">0</span></div>
+            <div class="dash-card-sub">↑ 18% vs semana anterior</div>
+          </div>
+          <div class="dash-card dash-card-5">
+            <div class="dash-card-label">Alcance Social</div>
+            <div class="dash-card-value"><span class="count" data-target="12">0</span>K</div>
+            <div class="dash-card-sub">↑ Seguidores ganados</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="section-label">Sobre Nosotros</div>
+        <h2 class="section-title">Creados para Quienes Construyen el Mundo</h2>
+        <p>Nexo Business Solutions fue fundada con una misión: dar a los pequeños negocios el mismo nivel de apoyo que las grandes corporaciones dan por sentado.</p>
+        <p>Plomeros, cerrajeros, electricistas, contratistas — tú eres experto en tu oficio. Nosotros somos expertos en los negocios. Juntos, nos aseguramos de que nada se pierda.</p>
+        <p>No somos una agencia sin rostro. Somos tus socios. Aprendemos tu negocio, hablamos tu idioma y siempre estamos en tu esquina.</p>
+        <ul class="about-list">
+          <li>Gerente de cuenta dedicado para cada cliente</li>
+          <li>Total transparencia — sin cargos ocultos ni tecnicismos</li>
+          <li>Enfocados en resultados, no solo en actividad</li>
+          <li>Especialistas en negocios locales con experiencia real</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="container">
+    <div class="testimonials-header">
+      <div class="section-label">Lo Que Dicen Los Clientes</div>
+      <h2 class="section-title">La Confianza de Negocios Locales</h2>
+      <p class="section-sub">No te quedes con nuestra palabra — aquí está lo que dicen las personas con quienes trabajamos.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <blockquote>"Desde que trabajo con Nexo, mi teléfono no para de sonar. Construyeron mi página web, manejan mis reseñas en Google y llevan mis cuentas en orden. No podría pedir más."</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">JM</div>
+          <div>
+            <div class="author-name">James M.</div>
+            <div class="author-role">Dueño, JM Plomería</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <blockquote>"No tenía idea de cuánto dinero estaba perdiendo hasta que Nexo hizo un análisis financiero completo. Ahora pongo precios correctamente y sé exactamente a dónde va mi dinero."</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">RK</div>
+          <div>
+            <div class="author-name">Rachel K.</div>
+            <div class="author-role">Dueña, Quick Key Cerrajería</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <blockquote>"Mi Instagram era un pueblo fantasma antes de Nexo. Ahora recibo clientes que me escriben directamente por Instagram cada semana. Los resultados hablan por sí solos."</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">TD</div>
+          <div>
+            <div class="author-name">Tony D.</div>
+            <div class="author-role">Dueño, TD Electricidad</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="container">
+    <div class="pricing-header">
+      <div class="section-label">Precios</div>
+      <h2 class="section-title">Planes Simples y Transparentes</h2>
+      <p class="section-sub">Sin sorpresas. Sin contratos a largo plazo. Precios claros que crecen con tu negocio.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price"><sup>$</sup>299<span class="period">/mes</span></div>
+        <div class="plan-desc">Pon tu negocio en línea y activo en redes sociales.</div>
+        <ul class="plan-features">
+          <li>Mantenimiento del sitio web</li>
+          <li>Gestión de Instagram (3x/semana)</li>
+          <li>1 reel por semana</li>
+          <li>Creación y publicación de contenido</li>
+          <li>Soporte por correo</li>
+        </ul>
+        <a href="#contact" class="plan-btn outline">Comenzar</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="popular-badge">Más Popular</div>
+        <div class="plan-name">Growth</div>
+        <div class="plan-price"><sup>$</sup>499<span class="period">/mes</span></div>
+        <div class="plan-desc">Todo lo que necesitas para manejar y entender tu negocio.</div>
+        <ul class="plan-features">
+          <li>Todo lo del plan Starter</li>
+          <li>Reporte financiero mensual (P&G)</li>
+          <li>Llamada de revisión financiera de 20 min</li>
+          <li>Desglose de ingresos, gastos y ganancias</li>
+          <li>Consejo empresarial mensual</li>
+          <li>Soporte prioritario</li>
+        </ul>
+        <a href="#contact" class="plan-btn solid">Comenzar</a>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">Pro</div>
+        <div class="plan-price"><sup>$</sup>799<span class="period">/mes</span></div>
+        <div class="plan-desc">Presencia digital completa — web, redes, finanzas y Google.</div>
+        <ul class="plan-features">
+          <li>Todo lo del plan Growth</li>
+          <li>2 reels por semana</li>
+          <li>Gestión de Perfil de Google Business</li>
+          <li>Respuesta a reseñas de Google</li>
+          <li>Optimización mensual del perfil</li>
+        </ul>
+        <a href="#contact" class="plan-btn outline">Comenzar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="standalone" style="background: var(--navy-light); padding: 100px 0;">
+  <div class="container">
+    <div class="pricing-header">
+      <div class="section-label">Servicios Individuales</div>
+      <h2 class="section-title">Sin Suscripción Mensual</h2>
+      <p class="section-sub">¿Necesitas algo específico? Obtén exactamente lo que necesitas, cuando lo necesitas — sin compromiso mensual.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto;">
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 36px 28px 44px 28px; overflow: visible;">
+        <div style="font-size: 2rem; margin-bottom: 16px;">🌐</div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.6; display: block; overflow: visible;">Sitio Web</div>
+        <div style="font-size: 1.6rem; font-weight: 800; color: #60a5fa; margin-bottom: 12px;">$800 <span style="font-size: 1rem; color: var(--text-muted);">– $1,200</span></div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">Sitio web 100% personalizado y optimizado para móvil. Incluye hasta 5 secciones, formulario de contacto y SEO básico.</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 36px 28px 44px 28px; overflow: visible;">
+        <div style="font-size: 2rem; margin-bottom: 16px;">📸</div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.6; display: block; overflow: visible;">Perfil de Instagram</div>
+        <div style="font-size: 1.6rem; font-weight: 800; color: #60a5fa; margin-bottom: 12px;">$200</div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">Configuración profesional del perfil con bio, destacados, identidad visual y tus primeras 9 publicaciones para lanzar con impacto.</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 36px 28px 44px 28px; overflow: visible;">
+        <div style="font-size: 2rem; margin-bottom: 16px;">📊</div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.6; display: block; overflow: visible;">Reporte Financiero</div>
+        <div style="font-size: 1.6rem; font-weight: 800; color: #60a5fa; margin-bottom: 12px;">$199 <span style="font-size: 1rem; color: var(--text-muted);">/mes</span></div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">Estado mensual de pérdidas y ganancias con ingresos, gastos y utilidad neta — más una llamada de revisión de 20 minutos. Sin redes sociales.</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 36px 28px 44px 28px; overflow: visible;">
+        <div style="font-size: 2rem; margin-bottom: 16px;">✏️</div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.6; display: block; overflow: visible;">Logo y Branding</div>
+        <div style="font-size: 1.6rem; font-weight: 800; color: #60a5fa; margin-bottom: 12px;">$300 <span style="font-size: 1rem; color: var(--text-muted);">– $500</span></div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">Diseño de logo personalizado con paleta de colores y kit de marca básico. Todo lo que necesitas para lucir profesional desde el primer día.</p>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 48px;">
+      <a href="#contact" class="plan-btn solid" style="display: inline-block;">Solicitar Cotización →</a>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-label">Contáctanos</div>
+        <h2 class="section-title">Hagamos Crecer Tu Negocio</h2>
+        <p>¿Listo para dejar de hacerlo todo solo? Agenda una consulta gratis y descubre exactamente lo que Nexo Business Solutions puede hacer por ti.</p>
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-item-icon">📞</div>
+            <div class="contact-item-text"><strong>Teléfono</strong>(786) 300-1273</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">✉️</div>
+            <div class="contact-item-text"><strong>Correo</strong>management@gonexousa.com</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <div class="contact-item-text"><strong>Ubicación</strong>Miami, FL</div>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" action="https://formspree.io/f/mzdlneek" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" placeholder="Juan"/>
+          </div>
+          <div class="form-group">
+            <label>Apellido</label>
+            <input type="text" placeholder="García"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Correo Electrónico</label>
+          <input type="email" placeholder="juan@tunegocio.com"/>
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" placeholder="(786) 000-0000"/>
+        </div>
+        <div class="form-group">
+          <label>Tipo de Negocio</label>
+          <select>
+            <option value="">Selecciona tu industria</option>
+            <option>Plomería</option>
+            <option>Cerrajería</option>
+            <option>Electricidad</option>
+            <option>HVAC / Aire Acondicionado</option>
+            <option>Jardinería / Landscaping</option>
+            <option>Servicios de Limpieza</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Mensaje</label>
+          <textarea placeholder="Cuéntanos un poco sobre tu negocio y en qué necesitas ayuda..."></textarea>
+        </div>
+        <button class="form-submit" type="submit">Enviar Mensaje →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<a href="https://wa.me/17863001273" target="_blank" class="whatsapp-btn" aria-label="Chatea por WhatsApp">
+  <span class="whatsapp-tooltip">Chatea con nosotros</span>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 Nexo Business Solutions. Todos los derechos reservados.</div>
+    <div class="footer-links">
+      <a href="#">Política de Privacidad</a>
+      <a href="#">Términos de Servicio</a>
+      <a href="#contact">Contacto</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav ul a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? '#fff' : ''; });
+  });
+  const counters = document.querySelectorAll('.count');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = +el.getAttribute('data-target');
+        const duration = 1500;
+        const step = target / (duration / 16);
+        let current = 0;
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) { current = target; clearInterval(timer); }
+          el.textContent = Math.floor(current);
+        }, 16);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => observer.observe(c));
+  document.querySelector('.form-submit').addEventListener('click', function(e) {
+    e.preventDefault();
+    this.textContent = '✓ ¡Mensaje Enviado!';
+    this.style.background = '#16a34a';
+    setTimeout(() => { this.textContent = 'Enviar Mensaje →'; this.style.background = ''; }, 3000);
+  });
+</script>
+</body>
+</html>
